@@ -29,7 +29,7 @@ Typically this will be integrated as a `Keptn Deployment Task <https://lifecycle
         name: baseproject-vault
         kind: SecretStore
       data:
-      - secretKey: SLACK_HOOK_TOKEN
+      - secretKey: SLACK_TOKEN
         remoteRef:
           key: zon/v1/slack/hackbot
           property: HOOK_TOKEN

@@ -1,8 +1,13 @@
-from .slack import Slack
 import click
 import json
 import os
 import logging
+
+from .bugsnag import Bugsnag
+from .grafana import Grafana
+from .honeycomb import Honeycomb
+from .slack import Slack
+from .speedcurve import Speedcurve
 
 
 @click.group()
@@ -30,6 +35,33 @@ def cli(ctx, environment, project, version):
 
 @cli.command()
 @click.pass_context
+def bugsnag(ctx, dataset, text, vcs_url):
+    notify = Bugsnag(**ctx.obj)
+    notify(os.environ['BUGSNAG_TOKEN'])
+
+
+@cli.command()
+@click.pass_context
+@click.option('--url', default='https://grafana.ops.zeit.de')
+@click.option('--text', default='{project} {version}')
+@click.option('--tags', default='deployment')
+def grafana(ctx, url, text, tags):
+    notify = Grafana(**ctx.obj)
+    notify(url, os.environ['GRAFANA_TOKEN'], text, tags.split(','))
+
+
+@cli.command()
+@click.pass_context
+@click.option('--dataset', required=True)
+@click.option('--text', default='{project} {version}')
+@click.option('--vcs-url')
+def honeycomb(ctx, dataset, text, vcs_url):
+    notify = Honeycomb(**ctx.obj)
+    notify(dataset, os.environ['HONEYCOMB_TOKEN'], text, vcs_url)
+
+
+@cli.command()
+@click.pass_context
 @click.option('--channel-name', default='releases')
 @click.option('--emoji')
 @click.option('--vcs-url')
@@ -38,3 +70,12 @@ def slack(ctx, channel_name, emoji, vcs_url, changelog_url):
     notify = Slack(**ctx.obj)
     notify(channel_name, os.environ['SLACK_HOOK_TOKEN'], emoji,
            vcs_url, changelog_url)
+
+
+@cli.command()
+@click.pass_context
+@click.option('--site-id', required=True)
+@click.option('--text', default='{project}_v{version}')
+def speedcurve(ctx, site_id, text):
+    notify = Speedcurve(**ctx.obj)
+    notify(site_id, os.environ['SPEEDCURVE_TOKEN'], text)
