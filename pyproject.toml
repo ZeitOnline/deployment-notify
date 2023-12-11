@@ -2,14 +2,13 @@
 name = "zeit.deploynotify"
 authors = [{ name = "Zeit Online", email = "zon-backend@zeit.de" }]
 dynamic = ["version", "readme"]
-
-[project.optional-dependencies]
-default = [
+dependencies = [
     "click",
     "jira",
     "requests",
 ]
 
+[project.optional-dependencies]
 test = [
     "pytest",
 ]
