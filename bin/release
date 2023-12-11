@@ -25,7 +25,7 @@ git tag "$version"
 
 image=$(awk -F= '/org.opencontainers.image.name/ { print $2 }' < Dockerfile)
 image="${image}:${version}"
-docker build --tag $image .
+docker build --target production --tag $image .
 docker push $image
 
 hatch build

@@ -2,9 +2,15 @@
 name = "deployment_notify"
 authors = [{ name = "Zeit Online", email = "zon-backend@zeit.de" }]
 dynamic = ["version", "readme"]
-dependencies = [
+
+[project.optional-dependencies]
+default = [
     "click",
     "requests",
+]
+
+test = [
+    "pytest",
 ]
 
 [build-system]
@@ -16,6 +22,9 @@ path = "src/deployment_notify/__init__.py"
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/x-rst"
 fragments = [{path="README.rst"}, {text="\n\n"}, {path="CHANGES.rst"}]
+
+[tool.pytest.ini_options]
+addopts = "--tb=native"
 
 [tool.towncrier]
 directory = "docs/changelog/"

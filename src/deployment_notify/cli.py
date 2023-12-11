@@ -6,7 +6,7 @@ import logging
 from .bugsnag import Bugsnag
 from .grafana import Grafana
 from .honeycomb import Honeycomb
-from .slack import Slack
+from .slack import SlackRelease, SlackPostdeploy
 from .speedcurve import Speedcurve
 
 
@@ -67,9 +67,19 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @click.option('--vcs-url')
 @click.option('--changelog-url')
 def slack(ctx, channel_name, emoji, vcs_url, changelog_url):
-    notify = Slack(**ctx.obj)
+    notify = SlackRelease(**ctx.obj)
     notify(channel_name, os.environ['SLACK_HOOK_TOKEN'], emoji,
            vcs_url, changelog_url)
+
+
+@cli.command()
+@click.pass_context
+@click.option('--channel-id')
+@click.option('--changelog', default='CHANGES.rst')
+def slack_postdeploy(ctx, channel_id, changelog):
+    notify = SlackPostdeploy(**ctx.obj)
+    notify(channel_id, changelog,
+           os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'])
 
 
 @cli.command()

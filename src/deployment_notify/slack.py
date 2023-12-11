@@ -1,4 +1,5 @@
 from .base import Notification
+from . import changelog
 import logging
 import requests
 
@@ -6,7 +7,7 @@ import requests
 log = logging.getLogger(__name__)
 
 
-class Slack(Notification):
+class SlackRelease(Notification):
 
     def __call__(self, channel_name, token, emoji,
                  vcs_url=None, changelog_url=None):
@@ -26,4 +27,23 @@ class Slack(Notification):
                     'vcs_url': vcs_url,
                     'changelog_url': changelog_url,
                 })
+            log.info('%s returned %s: %s', r.url, r.status_code, r.text)
+
+
+class SlackPostdeploy(Notification):
+
+    def __call__(self, channel_id, filename, slack_token, github_token):
+        t = changelog.download_changelog(github_token, self.project, filename)
+        postdeploy = changelog.extract_postdeploy(t)
+        if not postdeploy:
+            log.info(
+                'No postdeploy entries found in %s %s', self.project, filename)
+            return
+
+        with requests.Session() as http:
+            r = http.post(
+                'https://slack.com/api/chat.postMessage', json={
+                    'channel': channel_id,
+                    'text': f'```\n{postdeploy}\n```'
+                }, headers={'Authorization': f'Bearer {slack_token}'})
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
