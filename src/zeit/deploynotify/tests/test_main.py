@@ -10,7 +10,7 @@ def test_pip_check_for_all_extras():
     requirements = [
         packaging.requirements.Requirement(x) for x in
         importlib.metadata.metadata(
-            'deployment_notify').get_all('Requires-Dist')]
+            'zeit.deploynotify').get_all('Requires-Dist')]
     for req in requirements:
         installed = importlib.metadata.distribution(req.name)
         # Adapted from pip._internal.operations.check

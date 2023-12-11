@@ -1,5 +1,5 @@
 FROM python:3.12.0-slim AS base
-LABEL org.opencontainers.image.name=europe-west3-docker.pkg.dev/zeitonline-engineering/docker-zon/deployment-notify
+LABEL org.opencontainers.image.name=europe-west3-docker.pkg.dev/zeitonline-engineering/docker-zon/deploynotify
 WORKDIR /app
 
 COPY requirements.txt .
@@ -10,11 +10,11 @@ COPY requirements-testing.txt .
 RUN pip install --no-cache-dir --no-deps -r requirements-testing.txt
 ENV PYTHONDONTWRITEBYTECODE 1
 COPY pyproject.toml *.rst ./
-COPY src/deployment_notify/__init__.py src/deployment_notify/
+COPY src/zeit/deploynotify/__init__.py src/zeit/deploynotify/
 RUN pip install --no-cache-dir --no-deps -e .
 
 FROM base as production
 COPY pyproject.toml *.rst ./
 COPY src src
 RUN pip install --no-cache-dir -e . && pip check
-ENTRYPOINT ["python", "-m", "deployment_notify"]
+ENTRYPOINT ["python", "-m", "zeit.deploynotify"]

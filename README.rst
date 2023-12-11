@@ -13,7 +13,7 @@ Usage
 
 The package provides a "multi subcommand" CLI interface::
 
-    python -m deployment_notify
+    python -m zeit.deploynotify
         --environment=staging --project=example --version=1.2.3 \
         slack --channel=example --emoji=palm_tree
 
@@ -29,7 +29,7 @@ Typically this will be integrated as a `Keptn Deployment Task <https://lifecycle
         name: baseproject-vault
         kind: SecretStore
       data:
-      - secretKey: SLACK_TOKEN
+      - secretKey: SLACK_HOOK_TOKEN
         remoteRef:
           key: zon/v1/slack/hackbot
           property: HOOK_TOKEN
@@ -41,7 +41,7 @@ Typically this will be integrated as a `Keptn Deployment Task <https://lifecycle
     spec:
       container:
         name: task
-        image: europe-west3-docker.pkg.dev/zeitonline-engineering/docker-zon/deployment-notify:1.0.0
+        image: europe-west3-docker.pkg.dev/zeitonline-engineering/docker-zon/deploynotify:1.0.0
         envFrom:
           - secretRef:
               name: deployment-notify
