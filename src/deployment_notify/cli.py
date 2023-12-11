@@ -6,6 +6,7 @@ import logging
 from .bugsnag import Bugsnag
 from .grafana import Grafana
 from .honeycomb import Honeycomb
+from .jira import Jira
 from .slack import SlackRelease, SlackPostdeploy
 from .speedcurve import Speedcurve
 
@@ -58,6 +59,20 @@ def grafana(ctx, url, text, tags):
 def honeycomb(ctx, dataset, text, vcs_url):
     notify = Honeycomb(**ctx.obj)
     notify(dataset, os.environ['HONEYCOMB_TOKEN'], text, vcs_url)
+
+
+@cli.command()
+@click.pass_context
+@click.option('--url', default='https://zeit-online.atlassian.net')
+@click.option('--issue-prefix', default='ZO-')
+@click.option('--status-name', default='Testing')
+@click.option('--status-id', default='101')
+@click.option('--changelog', default='CHANGES.rst')
+def jira(ctx, url, issue_prefix, status_name, status_id, changelog):
+    notify = Jira(**ctx.obj)
+    notify(url, changelog, issue_prefix, status_name, status_id,
+           os.environ['JIRA_USERNAME'], os.environ['JIRA_TOKEN'],
+           os.environ['GITHUB_TOKEN'])
 
 
 @cli.command()

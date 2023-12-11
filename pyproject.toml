@@ -6,6 +6,7 @@ dynamic = ["version", "readme"]
 [project.optional-dependencies]
 default = [
     "click",
+    "jira",
     "requests",
 ]
 
@@ -25,6 +26,11 @@ fragments = [{path="README.rst"}, {text="\n\n"}, {path="CHANGES.rst"}]
 
 [tool.pytest.ini_options]
 addopts = "--tb=native"
+filterwarnings = [
+  "error",
+  # https://github.com/pycontribs/jira/issues/1557
+  "ignore::DeprecationWarning:jira.client",
+]
 
 [tool.towncrier]
 directory = "docs/changelog/"
