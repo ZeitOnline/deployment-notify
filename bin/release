@@ -11,7 +11,7 @@ if [[ $DIR/Pipfile.lock -nt $DIR/.pipenv.success ]]; then
     touch $DIR/.pipenv.success
 fi
 
-if pipenv run towncrier build --version master --draft 2>&1 | \
+if pipenv run towncrier build --version draft --draft 2>&1 | \
        grep -q "No significant changes"; then
     exit 0
 fi
@@ -28,8 +28,8 @@ image="${image}:${version}"
 docker build --target production --tag $image .
 docker push $image
 
-hatch build
-hatch publish --user __token__ --auth "$(vault read --field=token zon/v1/pypi/zon-backend)"
+pipenv run hatch build
+pipenv run hatch publish --user __token__ --auth "$(vault read --field=token zon/v1/pypi/zon-backend)"
 
 cd $ROOT
 pipenv run hatch version minor
