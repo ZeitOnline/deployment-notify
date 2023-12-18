@@ -36,7 +36,7 @@ def cli(ctx, environment, project, version):
 
 @cli.command()
 @click.pass_context
-def bugsnag(ctx, dataset, text, vcs_url):
+def bugsnag(ctx):
     notify = Bugsnag(**ctx.obj)
     notify(os.environ['BUGSNAG_TOKEN'])
 
