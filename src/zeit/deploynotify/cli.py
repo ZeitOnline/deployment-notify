@@ -11,7 +11,7 @@ from .slack import SlackRelease, SlackPostdeploy
 from .speedcurve import Speedcurve
 
 
-@click.group()
+@click.group(chain=True)
 @click.pass_context
 @click.option('--environment', required=True)
 @click.option('--project')
