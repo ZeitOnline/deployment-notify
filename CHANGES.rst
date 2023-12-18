@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.0.2 (2023-12-18)
+------------------
+
+Changes
++++++++
+
+- Fix bugsnag cli parsing (bugsnag)
+
+
 1.0.1 (2023-12-18)
 ------------------
 
