@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.0.3 (2023-12-18)
+------------------
+
+Changes
++++++++
+
+- Fix jira changelog parsing (jira)
+
+
 1.0.2 (2023-12-18)
 ------------------
 
