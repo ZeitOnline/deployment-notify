@@ -13,7 +13,7 @@ class Honeycomb(Notification):
                  staging_dataset_auto=True):
         text = text.format(**self.__dict__)
         if staging_dataset_auto and self.environment != 'production':
-            dataset = f'{dataset}-staging'
+            dataset = f'staging-{dataset}'
         if not vcs_url:
             vcs_url = f'http://github.com/ZeitOnline/{self.project}/tree/{self.version}'
 
