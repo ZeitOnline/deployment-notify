@@ -14,7 +14,7 @@ class Jira(Notification):
         t = changelog.download_changelog(github_token, self.project, filename)
         # XXX Can we get the previously active version from keptn?
         issues = changelog.extract_issues(
-            changelog.extract_version(t, self.version))
+            changelog.extract_version(t, self.version), issue_prefix)
 
         api = jira.JIRA(server=url, basic_auth=(jira_username, jira_token))
         for issue in issues:
