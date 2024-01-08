@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.1.0 (2024-01-08)
+------------------
+
+Changes
++++++++
+
+- ZO-4171: Implement posting the changelog diff to slack (changelog)
+
+
 1.0.4 (2024-01-08)
 ------------------
 
