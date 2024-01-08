@@ -11,7 +11,8 @@ class Jira(Notification):
 
     def __call__(self, url, filename, issue_prefix, status_name, status_id,
                  jira_username, jira_token, github_token):
-        t = changelog.download_changelog(github_token, self.project, filename)
+        t = changelog.download_changelog(
+            github_token, self.project, self.version, filename)
         # XXX Can we get the previously active version from keptn?
         issues = changelog.extract_issues(
             changelog.extract_version(t, self.version), issue_prefix)

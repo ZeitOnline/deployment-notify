@@ -33,7 +33,8 @@ class SlackRelease(Notification):
 class SlackPostdeploy(Notification):
 
     def __call__(self, channel_id, filename, slack_token, github_token):
-        t = changelog.download_changelog(github_token, self.project, filename)
+        t = changelog.download_changelog(
+            github_token, self.project, self.version, filename)
         postdeploy = changelog.extract_postdeploy(t)
         if not postdeploy:
             log.info(
