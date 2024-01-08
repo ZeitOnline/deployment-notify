@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.0.4 (2024-01-08)
+------------------
+
+Changes
++++++++
+
+- postdeploy: Retrieve changelog of the deployed version (postdeploy)
+
+
 1.0.3 (2023-12-18)
 ------------------
 
