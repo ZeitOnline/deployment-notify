@@ -19,7 +19,7 @@ def extract_postdeploy(changelog):
     end = -1
     for i, line in enumerate(lines):
         if line == 'POSTDEPLOY':
-            start = i + 1
+            start = i
         if '.. towncrier' in line:
             end = i - 1
             break
