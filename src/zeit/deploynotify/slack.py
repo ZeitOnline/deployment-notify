@@ -58,7 +58,7 @@ class SlackChangelog(Notification):
                     'attachments': [{
                         'title': title,
                         'mrkdwn_in': ['text'],
-                        'text': f'``{changes}```',
+                        'text': f'```{changes}```',
                     }],
                 }, headers={'Authorization': f'Bearer {slack_token}'})
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
