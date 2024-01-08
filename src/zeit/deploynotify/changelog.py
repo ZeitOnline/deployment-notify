@@ -5,7 +5,7 @@ import requests
 def download_changelog(token, package, version, filename):
     with requests.Session() as http:
         r = http.get(
-            f'https://api.github.com/repos/ZeitOnline/{package}/contents/{filename}?ref=${version}', headers={
+            f'https://api.github.com/repos/ZeitOnline/{package}/contents/{filename}?ref={version}', headers={
                 'Accept': 'application/vnd.github.3.raw',
                 'Authorization': f'Bearer {token}',
             })
