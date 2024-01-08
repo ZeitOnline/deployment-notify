@@ -7,7 +7,7 @@ from .bugsnag import Bugsnag
 from .grafana import Grafana
 from .honeycomb import Honeycomb
 from .jira import Jira
-from .slack import SlackRelease, SlackPostdeploy
+from .slack import SlackRelease, SlackChangelog, SlackPostdeploy
 from .speedcurve import Speedcurve
 
 
@@ -16,7 +16,8 @@ from .speedcurve import Speedcurve
 @click.option('--environment', required=True)
 @click.option('--project')
 @click.option('--version')
-def cli(ctx, environment, project, version):
+@click.option('--previous-version')
+def cli(ctx, environment, project, version, previous_version):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
     ctx.ensure_object(dict)
 
@@ -27,11 +28,13 @@ def cli(ctx, environment, project, version):
         keptn = json.loads(os.environ['CONTEXT'])
         ctx.obj['project'] = keptn['appName']
         ctx.obj['version'] = keptn['appVersion']
+        # XXX Can we get the previously active version from keptn?
 
     if project:
         ctx.obj['project'] = project
     if version:
         ctx.obj['version'] = version
+    ctx.obj['previous_version'] = previous_version
 
 
 @cli.command()
@@ -85,6 +88,18 @@ def slack(ctx, channel_name, emoji, vcs_url, changelog_url):
     notify = SlackRelease(**ctx.obj)
     notify(channel_name, os.environ['SLACK_HOOK_TOKEN'], emoji,
            vcs_url, changelog_url)
+
+
+@cli.command()
+@click.pass_context
+@click.option('--channel-id')
+@click.option('--title', default='{project} {environment} changelog')
+@click.option('--changelog', default='CHANGES.rst')
+def slack_changelog(ctx, channel_id, title, changelog):
+    notify = SlackChangelog(**ctx.obj)
+    notify(channel_id, changelog,
+           os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'],
+           title)
 
 
 @cli.command()
