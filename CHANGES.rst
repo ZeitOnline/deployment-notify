@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.1.1 (2024-01-08)
+------------------
+
+Changes
++++++++
+
+- Quote changelog text correctly for slack (changelog)
+
+
 1.1.0 (2024-01-08)
 ------------------
 
