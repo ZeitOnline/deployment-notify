@@ -34,7 +34,7 @@ pipenv run hatch publish --user __token__ --auth "$(vault read --field=token zon
 cd $ROOT
 pipenv run hatch version minor
 pipenv run hatch version dev
-git commit src/**/__init__.py -m "Back to development: $(pipenv run hatch version)"
+git commit src/**/__init__.py -m "Back to development: $(pipenv run hatch version 2>&1)"
 
 git push
 git push --tags
