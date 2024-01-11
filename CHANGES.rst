@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.2.1 (2024-01-11)
+------------------
+
+Changes
++++++++
+
+- Detect empty postdeploy properly (postdeploy)
+
+
 1.1.1 (2024-01-08)
 ------------------
 
