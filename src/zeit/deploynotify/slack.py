@@ -72,7 +72,11 @@ class SlackPostdeploy(Notification):
         postdeploy = changelog.extract_postdeploy(t)
         if not postdeploy:
             log.info(
-                'No postdeploy entries found in %s %s', self.project, filename)
+                'No postdeploy entries found in %s %s for %s',
+                self.project, filename, self.version)
+            return
+        if not channel_id:
+            print(postdeploy)
             return
 
         with requests.Session() as http:
