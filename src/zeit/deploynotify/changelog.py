@@ -24,10 +24,10 @@ def extract_postdeploy(changelog):
             end = i - 1
             break
 
-    result = '\n'.join(lines[start:end])
-    if result == '- nothing':
+    result = lines[start:end]
+    if result[-1] == '- nothing':
         return None
-    return result
+    return '\n'.join(result)
 
 
 def extract_version(changelog, version=None, previous_version=None):
