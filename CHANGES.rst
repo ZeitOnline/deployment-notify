@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.2.2 (2024-01-16)
+------------------
+
+Changes
++++++++
+
+- Don't set jira status if status is already 'more done' (jira)
+
+
 1.2.1 (2024-01-11)
 ------------------
 
