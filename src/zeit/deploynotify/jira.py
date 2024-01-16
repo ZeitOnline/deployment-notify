@@ -9,8 +9,8 @@ log = logging.getLogger(__name__)
 
 class Jira(Notification):
 
-    def __call__(self, url, filename, issue_prefix, status_name, status_id,
-                 jira_username, jira_token, github_token):
+    def __call__(self, url, filename, issue_prefix, status_id,
+                 ignore_status_names, jira_username, jira_token, github_token):
         t = changelog.download_changelog(
             github_token, self.project, self.version, filename)
         issues = changelog.extract_issues(
@@ -20,8 +20,9 @@ class Jira(Notification):
         api = jira.JIRA(server=url, basic_auth=(jira_username, jira_token))
         for issue in issues:
             issue = api.issue(issue)
-            if issue.fields.status.name == status_name:
-                log.info('%s already has status %s', issue, status_name)
+            current = issue.fields.status.name
+            if current in ignore_status_names:
+                log.info('%s already has status %s', issue, current)
                 continue
-            log.info('Setting %s to %s', issue, status_name)
+            log.info('Setting %s to %s', issue, status_id)
             api.transition_issue(issue, status_id)

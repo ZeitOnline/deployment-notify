@@ -68,12 +68,12 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @click.pass_context
 @click.option('--url', default='https://zeit-online.atlassian.net')
 @click.option('--issue-prefix', default='ZO-')
-@click.option('--status-name', default='Testing')
-@click.option('--status-id', default='101')
+@click.option('--status-id', default='101')  # 101=Testing
+@click.option('--ignore-status', default='Testing,Approved,Closed')
 @click.option('--changelog', default='CHANGES.rst')
-def jira(ctx, url, issue_prefix, status_name, status_id, changelog):
+def jira(ctx, url, issue_prefix, status_id, ignore_status, changelog):
     notify = Jira(**ctx.obj)
-    notify(url, changelog, issue_prefix, status_name, status_id,
+    notify(url, changelog, issue_prefix, ignore_status.split(','), status_id,
            os.environ['JIRA_USERNAME'], os.environ['JIRA_TOKEN'],
            os.environ['GITHUB_TOKEN'])
 
