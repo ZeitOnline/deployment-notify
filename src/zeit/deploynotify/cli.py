@@ -73,7 +73,7 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @click.option('--changelog', default='CHANGES.rst')
 def jira(ctx, url, issue_prefix, status_id, ignore_status, changelog):
     notify = Jira(**ctx.obj)
-    notify(url, changelog, issue_prefix, ignore_status.split(','), status_id,
+    notify(url, changelog, issue_prefix, status_id, ignore_status.split(','),
            os.environ['JIRA_USERNAME'], os.environ['JIRA_TOKEN'],
            os.environ['GITHUB_TOKEN'])
 
