@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.2.3 (2024-01-17)
+------------------
+
+Changes
++++++++
+
+- Fix jira status change (jira)
+
+
 1.2.2 (2024-01-16)
 ------------------
 
