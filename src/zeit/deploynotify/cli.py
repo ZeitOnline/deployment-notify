@@ -23,9 +23,9 @@ def cli(ctx, environment, project, version, previous_version):
 
     ctx.obj['environment'] = environment
 
-    # https://lifecycle.keptn.sh/docs/implementing/tasks/#context
-    if 'CONTEXT' in os.environ:
-        keptn = json.loads(os.environ['CONTEXT'])
+    # https://keptn.sh/stable/docs/guides/tasks/#context
+    if 'KEPTN_CONTEXT' in os.environ:
+        keptn = json.loads(os.environ['KEPTN_CONTEXT'])
         ctx.obj['project'] = keptn['appName']
         ctx.obj['version'] = keptn['appVersion']
         # XXX Can we get the previously active version from keptn?
