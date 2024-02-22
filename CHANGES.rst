@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.3.0 (2024-02-22)
+------------------
+
+Changes
++++++++
+
+- Update to keptn-0.10 context API (keptn)
+
+
 1.2.3 (2024-01-17)
 ------------------
 
