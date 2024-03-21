@@ -28,7 +28,6 @@ def cli(ctx, environment, project, version, previous_version):
         keptn = json.loads(os.environ['KEPTN_CONTEXT'])
         ctx.obj['project'] = keptn['appName']
         ctx.obj['version'] = keptn['appVersion']
-        # XXX Can we get the previously active version from keptn?
 
     if project:
         ctx.obj['project'] = project
