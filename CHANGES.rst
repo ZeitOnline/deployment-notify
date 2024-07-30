@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.4.1 (2024-07-30)
+------------------
+
+Changes
++++++++
+
+- ZO-5636: Set all hny dataset as default (ZO-5636)
+
+
 1.4.0 (2024-07-30)
 ------------------
 
