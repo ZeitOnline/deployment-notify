@@ -13,6 +13,9 @@ test = [
     "pytest",
 ]
 
+[project.urls]
+Repository = "https://github.com/ZeitOnline/deployment-notify"
+
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
