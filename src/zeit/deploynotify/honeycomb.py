@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 
 class Honeycomb(Notification):
 
-    def __call__(self, dataset, token,
+    def __call__(self, token, dataset='__all__',
                  text='{project} {version}', vcs_url=None,
                  staging_dataset_auto=True):
         text = text.format(**self.__dict__)

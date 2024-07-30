@@ -55,12 +55,12 @@ def grafana(ctx, url, text, tags):
 
 @cli.command()
 @click.pass_context
-@click.option('--dataset', required=True)
+@click.option('--dataset', default='__all__')
 @click.option('--text', default='{project} {version}')
 @click.option('--vcs-url')
 def honeycomb(ctx, dataset, text, vcs_url):
     notify = Honeycomb(**ctx.obj)
-    notify(dataset, os.environ['HONEYCOMB_TOKEN'], text, vcs_url)
+    notify(os.environ['HONEYCOMB_TOKEN'], dataset, text, vcs_url)
 
 
 @cli.command()
