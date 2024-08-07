@@ -19,6 +19,7 @@ POSTDEPLOY
 
 - Initial release""")
     assert postdeploy == """\
+POSTDEPLOY
 - one
 - two"""
 
