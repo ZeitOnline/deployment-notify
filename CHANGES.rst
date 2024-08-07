@@ -3,6 +3,16 @@ Changelog
 
 .. towncrier release notes start
 
+1.5.0 (2024-08-07)
+------------------
+
+Changes
++++++++
+
+- issues: Support multiple issue prefixes (issues)
+- jira: Select jira status by name insead of id (jira)
+
+
 1.4.1 (2024-07-30)
 ------------------
 
