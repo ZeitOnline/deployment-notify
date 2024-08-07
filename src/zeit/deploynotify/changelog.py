@@ -63,7 +63,7 @@ def extract_version(changelog, version=None, previous_version=None):
 
 
 def extract_issues(changelog, prefix):
-    _issue = re.compile(rf'\s*-\s+({prefix}\d+):')
+    _issue = re.compile(rf'\s*-\s+(({prefix})-\d+):')
     result = []
     for line in changelog.split('\n'):
         issue = _issue.search(line)

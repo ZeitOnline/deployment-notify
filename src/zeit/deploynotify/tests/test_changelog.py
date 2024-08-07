@@ -108,11 +108,13 @@ def test_extract_issues():
 
 - ZO-123: Issue A
 
+- WCM-789: Issue C
+
 FIX:
 - Fix something
 
 - MAINT: Maintenance
 
 - ZO-456: Issue B
-""", 'ZO-')
-    assert issues == ['ZO-123', 'ZO-456']
+""", 'ZO|WCM')
+    assert issues == ['ZO-123', 'WCM-789', 'ZO-456']
