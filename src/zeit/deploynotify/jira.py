@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 
 class Jira(Notification):
 
-    def __call__(self, url, filename, issue_prefix, status_id,
+    def __call__(self, url, filename, issue_prefix, status_name,
                  ignore_status_names, jira_username, jira_token, github_token):
         t = changelog.download_changelog(
             github_token, self.project, self.version, filename)
@@ -24,5 +24,5 @@ class Jira(Notification):
             if current in ignore_status_names:
                 log.info('%s already has status %s', issue, current)
                 continue
-            log.info('Setting %s to %s', issue, status_id)
-            api.transition_issue(issue, status_id)
+            log.info('Setting %s to %s', issue, status_name)
+            api.transition_issue(issue, status_name)
