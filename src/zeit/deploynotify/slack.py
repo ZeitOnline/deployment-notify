@@ -31,6 +31,26 @@ class SlackRelease(Notification):
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
 
 
+class SlackVersionReminder(Notification):
+    """Check given vivi version against the version seen in content storage api
+
+    If versions differ, give friendly reminder to update content storage
+    """
+
+    def __call__(self, channel_id, vivi_version, slack_token):
+        with requests.Session() as http:
+            r = http.get('https://content-storage.staging.zon.zeit.de/public/-')
+            storage_version = r.json()['data']['vivi-version']
+            if storage_version == vivi_version:
+                return
+            r = http.post(
+                'https://slack.com/api/chat.postMessage', json={
+                    'channel': channel_id,
+                    'text': f'Storage API vivi {storage_version} braucht ein Update auf vivi {vivi_version}',
+                }, headers={'Authorization': f'Bearer {slack_token}'})
+            log.info('%s returned %s: %s', r.url, r.status_code, r.text)
+
+
 class SlackChangelog(Notification):
 
     def __call__(self, channel_id, filename, slack_token, github_token,

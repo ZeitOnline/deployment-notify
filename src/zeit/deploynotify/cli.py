@@ -7,7 +7,7 @@ from .bugsnag import Bugsnag
 from .grafana import Grafana
 from .honeycomb import Honeycomb
 from .jira import Jira
-from .slack import SlackRelease, SlackChangelog, SlackPostdeploy
+from .slack import SlackRelease, SlackChangelog, SlackPostdeploy, SlackVersionReminder
 from .speedcurve import Speedcurve
 
 
@@ -99,6 +99,17 @@ def slack_changelog(ctx, channel_id, title, changelog):
     notify(channel_id, changelog,
            os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'],
            title)
+
+
+@cli.command()
+@click.pass_context
+@click.option('--channel-id')
+@click.option('--vivi-version')
+def slack_reminder(ctx, channel_id, vivi_version):
+    notify = SlackVersionReminder(**ctx.obj)
+    notify(channel_id,
+           vivi_version,
+           os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'])
 
 
 @cli.command()
