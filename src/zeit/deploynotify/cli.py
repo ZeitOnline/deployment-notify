@@ -105,11 +105,13 @@ def slack_changelog(ctx, channel_id, title, changelog):
 @click.pass_context
 @click.option('--channel-id')
 @click.option('--vivi-version')
-def slack_reminder(ctx, channel_id, vivi_version):
+@click.option('--environment')
+def slack_reminder(ctx, channel_id, vivi_version, environment):
     notify = SlackVersionReminder(**ctx.obj)
     notify(channel_id,
            vivi_version,
-           os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'])
+           environment,
+           os.environ['SLACK_BOT_TOKEN'])
 
 
 @cli.command()
