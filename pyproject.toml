@@ -39,6 +39,9 @@ filterwarnings = [
   # https://github.com/pycontribs/jira/issues/1557
   "ignore::DeprecationWarning:jira.client",
 ]
+pythonpath = [
+  "src",
+]
 
 [tool.towncrier]
 directory = "docs/changelog/"
