@@ -30,7 +30,6 @@ def test_cli_slack_reminder(mock_get, monkeypatch, cli):
             '--previous-version', '0.9.0',
             'slack-reminder',
             '--channel-id', 'C12345678',
-            '--vivi-version', '1.0.0'
         ])
         mock_get.assert_called_once_with('https://content-storage.prod.zon.zeit.de/public/-')
         assert result.exit_code == 0

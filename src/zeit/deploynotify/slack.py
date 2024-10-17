@@ -37,17 +37,17 @@ class SlackVersionReminder(Notification):
     If versions differ, give friendly reminder to update content storage
     """
 
-    def __call__(self, channel_id, vivi_version, slack_token):
+    def __call__(self, channel_id, slack_token):
         with requests.Session() as http:
             environment = self.environment if self.environment == 'staging' else 'prod'
             r = http.get(f'https://content-storage.{environment}.zon.zeit.de/public/-')
             storage_version = r.json()['data']['vivi-version']
-            if storage_version == vivi_version:
+            if storage_version == self.version:
                 return
             r = http.post(
                 'https://slack.com/api/chat.postMessage', json={
                     'channel': channel_id,
-                    'text': f'Storage API vivi {storage_version} braucht ein Update auf vivi {vivi_version}',
+                    'text': f'Storage API vivi {storage_version} braucht ein Update auf vivi {self.version}',
                 }, headers={'Authorization': f'Bearer {slack_token}'})
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
 
