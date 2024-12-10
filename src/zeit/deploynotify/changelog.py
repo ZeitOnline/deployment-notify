@@ -2,10 +2,15 @@ import re
 import requests
 
 
-def download_changelog(token, package, version, filename):
+def download_changelog(token, package, version, filename, from_tag=True):
+    params = {}
+    if from_tag:
+        params['ref'] = version
     with requests.Session() as http:
         r = http.get(
-            f'https://api.github.com/repos/ZeitOnline/{package}/contents/{filename}?ref={version}', headers={
+            f'https://api.github.com/repos/ZeitOnline/{package}/contents/{filename}',
+            params=params,
+            headers={
                 'Accept': 'application/vnd.github.3.raw',
                 'Authorization': f'Bearer {token}',
             })

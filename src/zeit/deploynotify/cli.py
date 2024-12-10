@@ -70,9 +70,12 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @click.option('--status-name', default='Testing')
 @click.option('--ignore-status', default='Testing,Approved,Closed')
 @click.option('--changelog', default='CHANGES.rst')
-def jira(ctx, url, issue_prefix, status_name, ignore_status, changelog):
+@click.option('--changelog-from-tag/--no-changelog-from-tag', default=True)
+def jira(ctx, url, issue_prefix, status_name, ignore_status, changelog,
+         changelog_from_tag):
     notify = Jira(**ctx.obj)
     notify(url, changelog, issue_prefix, status_name, ignore_status.split(','),
+           changelog_from_tag,
            os.environ['JIRA_USERNAME'], os.environ['JIRA_TOKEN'],
            os.environ['GITHUB_TOKEN'])
 
