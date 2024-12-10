@@ -24,9 +24,6 @@ path = "src/zeit/deploynotify/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeit"]
-strict-naming = false  # required for proper output filename
-[tool.hatch.build.targets.sdist]
-strict-naming = false  # required for proper output filename
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/x-rst"
