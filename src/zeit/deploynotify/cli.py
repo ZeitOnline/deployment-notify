@@ -27,7 +27,7 @@ def cli(ctx, environment, project, version, previous_version):
     if 'KEPTN_CONTEXT' in os.environ:
         keptn = json.loads(os.environ['KEPTN_CONTEXT'])
         ctx.obj['project'] = keptn['appName']
-        ctx.obj['version'] = keptn['appVersion']
+        ctx.obj['version'] = keptn['workloadVersion']
 
     if project:
         ctx.obj['project'] = project
