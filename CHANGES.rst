@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.8.1 (2024-12-11)
+------------------
+
+Changes
++++++++
+
+- Retrieve workloadVersion, not appVersion from keptn context (keptn)
+
+
 1.7.0 (2024-12-10)
 ------------------
 
