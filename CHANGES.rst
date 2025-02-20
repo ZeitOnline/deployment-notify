@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.9.0 (2025-02-20)
+------------------
+
+Changes
++++++++
+
+- Move printing of changelog diff to CLI for reusability (printdiff)
+
+
 1.8.1 (2024-12-11)
 ------------------
 
