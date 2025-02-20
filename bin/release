@@ -23,14 +23,6 @@ pipenv run towncrier build --version="$version" --yes
 git commit src/**/__init__.py CHANGES.rst docs/changelog/ -m "Preparing release: $version"
 git tag "$version"
 
-image=$(awk -F= '/org.opencontainers.image.name/ { print $2 }' < Dockerfile)
-image="${image}:${version}"
-if [[ "$(uname -m)" = "arm64" ]]; then
-    opts="--platform linux/amd64"
-fi
-docker build --target production $opts --tag $image .
-docker push $image
-
 pipenv run hatch build
 pipenv run hatch publish --user __token__ --auth "$(vault read --field=token zon/v1/pypi/zon-backend)"
 
