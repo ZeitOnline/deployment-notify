@@ -67,9 +67,8 @@ class SlackChangelog(Notification):
             return
         changes = re.sub('\n+', '\n', changes)  # Save some vertical space
 
-        print(changes)
         if not channel_id:
-            return
+            return changes
 
         title = title.format(**self.__dict__)
         with requests.Session() as http:
@@ -83,6 +82,8 @@ class SlackChangelog(Notification):
                     }],
                 }, headers={'Authorization': f'Bearer {slack_token}'})
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
+
+        return changes
 
 
 class SlackPostdeploy(Notification):

@@ -99,9 +99,10 @@ def slack(ctx, channel_name, emoji, vcs_url, changelog_url):
 @click.option('--changelog', default='CHANGES.rst')
 def slack_changelog(ctx, channel_id, title, changelog):
     notify = SlackChangelog(**ctx.obj)
-    notify(channel_id, changelog,
-           os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'],
-           title)
+    diff = notify(channel_id, changelog,
+                  os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'],
+                  title)
+    print(diff)
 
 
 @cli.command()
