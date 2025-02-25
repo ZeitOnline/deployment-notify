@@ -68,7 +68,7 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @click.option('--url', default='https://zeit-online.atlassian.net')
 @click.option('--issue-prefix', default='ZO|WCM')
 @click.option('--status-name', default='Testing')
-@click.option('--ignore-status', default='Testing,Approved,Closed')
+@click.option('--ignore-status', default='Backlog,Testing,Approved,Closed')
 @click.option('--changelog', default='CHANGES.rst')
 @click.option('--changelog-from-tag/--no-changelog-from-tag', default=True)
 def jira(ctx, url, issue_prefix, status_name, ignore_status, changelog,
