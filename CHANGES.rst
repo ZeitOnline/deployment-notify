@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.9.1 (2025-02-25)
+------------------
+
+Changes
++++++++
+
+- Ignore status Backlog by default (jira)
+
+
 1.9.0 (2025-02-20)
 ------------------
 
