@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.10.0 (2025-02-27)
+-------------------
+
+Changes
++++++++
+
+- Specify separate title for postdeploy message (postdeploy)
+
+
 1.9.1 (2025-02-25)
 ------------------
 
