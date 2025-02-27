@@ -1,4 +1,5 @@
 import re
+
 import requests
 
 
@@ -13,7 +14,8 @@ def download_changelog(token, package, version, filename, from_tag=True):
             headers={
                 'Accept': 'application/vnd.github.3.raw',
                 'Authorization': f'Bearer {token}',
-            })
+            },
+        )
         r.raise_for_status()
         return r.text
 

@@ -1,17 +1,17 @@
-from .base import Notification
-from . import changelog
 import logging
 import re
+
 import requests
+
+from . import changelog
+from .base import Notification
 
 
 log = logging.getLogger(__name__)
 
 
 class SlackRelease(Notification):
-
-    def __call__(self, channel_name, token, emoji,
-                 vcs_url=None, changelog_url=None):
+    def __call__(self, channel_name, token, emoji, vcs_url=None, changelog_url=None):
         if not vcs_url:
             vcs_url = f'http://github.com/ZeitOnline/{self.project}/tree/{self.version}'
         if not changelog_url:
@@ -27,7 +27,8 @@ class SlackRelease(Notification):
                     'emoji': emoji,
                     'vcs_url': vcs_url,
                     'changelog_url': changelog_url,
-                })
+                },
+            )
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
 
 
@@ -45,25 +46,38 @@ class SlackVersionReminder(Notification):
             if storage_version == self.version:
                 return
             r = http.post(
-                'https://slack.com/api/chat.postMessage', json={
+                'https://slack.com/api/chat.postMessage',
+                json={
                     'channel': channel_id,
-                    'text': f'Storage API vivi {storage_version} braucht ein Update auf vivi {self.version}',
-                }, headers={'Authorization': f'Bearer {slack_token}'})
+                    'text': (
+                        f'Storage API vivi {storage_version} braucht ein '
+                        f'Update auf vivi {self.version}'
+                    ),
+                },
+                headers={'Authorization': f'Bearer {slack_token}'},
+            )
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
 
 
 class SlackChangelog(Notification):
-
-    def __call__(self, channel_id, filename, slack_token, github_token,
-                 title='{project} {environment} changelog'):
-        t = changelog.download_changelog(
-            github_token, self.project, self.version, filename)
-        changes = changelog.extract_version(
-            t, self.version, self.previous_version)
+    def __call__(
+        self,
+        channel_id,
+        filename,
+        slack_token,
+        github_token,
+        title='{project} {environment} changelog',
+    ):
+        t = changelog.download_changelog(github_token, self.project, self.version, filename)
+        changes = changelog.extract_version(t, self.version, self.previous_version)
         if not changes:
             log.info(
                 'No changelog found in %s %s for %s - %s',
-                self.project, filename, self.previous_version, self.version)
+                self.project,
+                filename,
+                self.previous_version,
+                self.version,
+            )
             return
         changes = re.sub('\n+', '\n', changes)  # Save some vertical space
 
@@ -73,30 +87,34 @@ class SlackChangelog(Notification):
         title = title.format(**self.__dict__)
         with requests.Session() as http:
             r = http.post(
-                'https://slack.com/api/chat.postMessage', json={
+                'https://slack.com/api/chat.postMessage',
+                json={
                     'channel': channel_id,
-                    'attachments': [{
-                        'title': title,
-                        'mrkdwn_in': ['text'],
-                        'text': f'```{changes}```',
-                    }],
-                }, headers={'Authorization': f'Bearer {slack_token}'})
+                    'attachments': [
+                        {
+                            'title': title,
+                            'mrkdwn_in': ['text'],
+                            'text': f'```{changes}```',
+                        }
+                    ],
+                },
+                headers={'Authorization': f'Bearer {slack_token}'},
+            )
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)
 
         return changes
 
 
 class SlackPostdeploy(Notification):
-
-    def __call__(self, channel_id, filename, slack_token, github_token,
-                 title='{project} postdeploy'):
-        t = changelog.download_changelog(
-            github_token, self.project, self.version, filename)
+    def __call__(
+        self, channel_id, filename, slack_token, github_token, title='{project} postdeploy'
+    ):
+        t = changelog.download_changelog(github_token, self.project, self.version, filename)
         postdeploy = changelog.extract_postdeploy(t)
         if not postdeploy:
             log.info(
-                'No postdeploy entries found in %s %s for %s',
-                self.project, filename, self.version)
+                'No postdeploy entries found in %s %s for %s', self.project, filename, self.version
+            )
             return
         if not channel_id:
             print(postdeploy)
@@ -104,12 +122,17 @@ class SlackPostdeploy(Notification):
 
         with requests.Session() as http:
             r = http.post(
-                'https://slack.com/api/chat.postMessage', json={
+                'https://slack.com/api/chat.postMessage',
+                json={
                     'channel': channel_id,
-                    'attachments': [{
-                        'title': title.format(**self.__dict__),
-                        'mrkdwn_in': ['text'],
-                        'text': f'```{postdeploy}```',
-                    }],
-                }, headers={'Authorization': f'Bearer {slack_token}'})
+                    'attachments': [
+                        {
+                            'title': title.format(**self.__dict__),
+                            'mrkdwn_in': ['text'],
+                            'text': f'```{postdeploy}```',
+                        }
+                    ],
+                },
+                headers={'Authorization': f'Bearer {slack_token}'},
+            )
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)

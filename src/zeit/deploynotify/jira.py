@@ -1,23 +1,33 @@
-from .base import Notification
-from . import changelog
-import jira
 import logging
+
+import jira
+
+from . import changelog
+from .base import Notification
 
 
 log = logging.getLogger(__name__)
 
 
 class Jira(Notification):
-
-    def __call__(self, url, filename, issue_prefix, status_name,
-                 ignore_status_names, changelog_from_tag,
-                 jira_username, jira_token, github_token):
+    def __call__(
+        self,
+        url,
+        filename,
+        issue_prefix,
+        status_name,
+        ignore_status_names,
+        changelog_from_tag,
+        jira_username,
+        jira_token,
+        github_token,
+    ):
         t = changelog.download_changelog(
-            github_token, self.project, self.version, filename,
-            changelog_from_tag)
+            github_token, self.project, self.version, filename, changelog_from_tag
+        )
         issues = changelog.extract_issues(
-            changelog.extract_version(t, self.version, self.previous_version),
-            issue_prefix)
+            changelog.extract_version(t, self.version, self.previous_version), issue_prefix
+        )
 
         api = jira.JIRA(server=url, basic_auth=(jira_username, jira_token))
         for issue in issues:

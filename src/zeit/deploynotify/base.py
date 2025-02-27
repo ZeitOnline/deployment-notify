@@ -1,5 +1,4 @@
 class Notification:
-
     def __init__(self, environment, project, version, previous_version):
         self.environment = environment
         self.project = project

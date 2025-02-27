@@ -1,13 +1,14 @@
-import click
 import json
-import os
 import logging
+import os
+
+import click
 
 from .bugsnag import Bugsnag
 from .grafana import Grafana
 from .honeycomb import Honeycomb
 from .jira import Jira
-from .slack import SlackRelease, SlackChangelog, SlackPostdeploy, SlackVersionReminder
+from .slack import SlackChangelog, SlackPostdeploy, SlackRelease, SlackVersionReminder
 from .speedcurve import Speedcurve
 
 
@@ -71,13 +72,19 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @click.option('--ignore-status', default='Backlog,Testing,Approved,Closed')
 @click.option('--changelog', default='CHANGES.rst')
 @click.option('--changelog-from-tag/--no-changelog-from-tag', default=True)
-def jira(ctx, url, issue_prefix, status_name, ignore_status, changelog,
-         changelog_from_tag):
+def jira(ctx, url, issue_prefix, status_name, ignore_status, changelog, changelog_from_tag):
     notify = Jira(**ctx.obj)
-    notify(url, changelog, issue_prefix, status_name, ignore_status.split(','),
-           changelog_from_tag,
-           os.environ['JIRA_USERNAME'], os.environ['JIRA_TOKEN'],
-           os.environ['GITHUB_TOKEN'])
+    notify(
+        url,
+        changelog,
+        issue_prefix,
+        status_name,
+        ignore_status.split(','),
+        changelog_from_tag,
+        os.environ['JIRA_USERNAME'],
+        os.environ['JIRA_TOKEN'],
+        os.environ['GITHUB_TOKEN'],
+    )
 
 
 @cli.command()
@@ -88,8 +95,7 @@ def jira(ctx, url, issue_prefix, status_name, ignore_status, changelog,
 @click.option('--changelog-url')
 def slack(ctx, channel_name, emoji, vcs_url, changelog_url):
     notify = SlackRelease(**ctx.obj)
-    notify(channel_name, os.environ['SLACK_HOOK_TOKEN'], emoji,
-           vcs_url, changelog_url)
+    notify(channel_name, os.environ['SLACK_HOOK_TOKEN'], emoji, vcs_url, changelog_url)
 
 
 @cli.command()
@@ -99,9 +105,9 @@ def slack(ctx, channel_name, emoji, vcs_url, changelog_url):
 @click.option('--changelog', default='CHANGES.rst')
 def slack_changelog(ctx, channel_id, title, changelog):
     notify = SlackChangelog(**ctx.obj)
-    diff = notify(channel_id, changelog,
-                  os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'],
-                  title)
+    diff = notify(
+        channel_id, changelog, os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'], title
+    )
     print(diff)
 
 
@@ -119,8 +125,7 @@ def slack_reminder(ctx, channel_id):
 @click.option('--changelog', default='CHANGES.rst')
 def slack_postdeploy(ctx, channel_id, changelog):
     notify = SlackPostdeploy(**ctx.obj)
-    notify(channel_id, changelog,
-           os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'])
+    notify(channel_id, changelog, os.environ['SLACK_BOT_TOKEN'], os.environ['GITHUB_TOKEN'])
 
 
 @cli.command()

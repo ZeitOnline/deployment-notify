@@ -18,9 +18,12 @@ POSTDEPLOY
 ------------------
 
 - Initial release""")
-    assert postdeploy == """\
+    assert (
+        postdeploy
+        == """\
 - one
 - two"""
+    )
 
 
 def test_postdeploy_only_nothing_returns_empty():
@@ -63,27 +66,35 @@ Changelog
 
 
 def test_extract_first_version():
-    assert changelog.extract_version(VERSIONS) == """\
+    assert (
+        changelog.extract_version(VERSIONS)
+        == """\
 1.3.0 (2023-04-03)
 ------------------
 
 - Entry 1.3.0 A
 
 - Entry 1.3.0 B"""
+    )
 
 
 def test_extract_specified_version():
-    assert changelog.extract_version(VERSIONS, '1.2.0') == """\
+    assert (
+        changelog.extract_version(VERSIONS, '1.2.0')
+        == """\
 1.2.0 (2023-04-02)
 ------------------
 
 - Entry 1.2.0 A
 
 - Entry 1.2.0 B"""
+    )
 
 
 def test_extract_to_previous_version():
-    assert changelog.extract_version(VERSIONS, '1.3.0', '1.0.0') == """\
+    assert (
+        changelog.extract_version(VERSIONS, '1.3.0', '1.0.0')
+        == """\
 1.3.0 (2023-04-03)
 ------------------
 
@@ -98,10 +109,12 @@ def test_extract_to_previous_version():
 - Entry 1.2.0 A
 
 - Entry 1.2.0 B"""
+    )
 
 
 def test_extract_issues():
-    issues = changelog.extract_issues("""\
+    issues = changelog.extract_issues(
+        """\
 1.3.0 (2023-04-03)
 ------------------
 
@@ -115,5 +128,7 @@ FIX:
 - MAINT: Maintenance
 
 - ZO-456: Issue B
-""", 'ZO|WCM')
+""",
+        'ZO|WCM',
+    )
     assert issues == ['ZO-123', 'WCM-789', 'ZO-456']
