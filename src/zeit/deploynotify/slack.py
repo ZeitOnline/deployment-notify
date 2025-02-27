@@ -88,7 +88,8 @@ class SlackChangelog(Notification):
 
 class SlackPostdeploy(Notification):
 
-    def __call__(self, channel_id, filename, slack_token, github_token):
+    def __call__(self, channel_id, filename, slack_token, github_token,
+                 title='{project} postdeploy'):
         t = changelog.download_changelog(
             github_token, self.project, self.version, filename)
         postdeploy = changelog.extract_postdeploy(t)
@@ -105,6 +106,10 @@ class SlackPostdeploy(Notification):
             r = http.post(
                 'https://slack.com/api/chat.postMessage', json={
                     'channel': channel_id,
-                    'text': f'```\n{postdeploy}\n```'
+                    'attachments': [{
+                        'title': title.format(**self.__dict__),
+                        'mrkdwn_in': ['text'],
+                        'text': f'```{postdeploy}```',
+                    }],
                 }, headers={'Authorization': f'Bearer {slack_token}'})
             log.info('%s returned %s: %s', r.url, r.status_code, r.text)

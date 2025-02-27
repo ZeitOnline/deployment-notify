@@ -19,14 +19,12 @@ POSTDEPLOY
 
 - Initial release""")
     assert postdeploy == """\
-POSTDEPLOY
 - one
 - two"""
 
 
 def test_postdeploy_only_nothing_returns_empty():
     postdeploy = changelog.extract_postdeploy("""\
-POSTDEPLOY
 - nothing
 
 .. towncrier release notes start""")
