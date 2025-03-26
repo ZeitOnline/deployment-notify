@@ -4,7 +4,6 @@ import os
 
 import click
 
-from .bugsnag import Bugsnag
 from .grafana import Grafana
 from .honeycomb import Honeycomb
 from .jira import Jira
@@ -35,13 +34,6 @@ def cli(ctx, environment, project, version, previous_version):
     if version:
         ctx.obj['version'] = version
     ctx.obj['previous_version'] = previous_version
-
-
-@cli.command()
-@click.pass_context
-def bugsnag(ctx):
-    notify = Bugsnag(**ctx.obj)
-    notify(os.environ['BUGSNAG_TOKEN'])
 
 
 @cli.command()
