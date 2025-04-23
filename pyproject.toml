@@ -29,6 +29,9 @@ packages = ["src/zeit"]
 content-type = "text/x-rst"
 fragments = [{path="README.rst"}, {text="\n\n"}, {path="CHANGES.rst"}]
 
+[tool.hatch.envs.test]
+features = ["test"]
+
 [tool.pytest.ini_options]
 addopts = "--tb=native"
 filterwarnings = [
