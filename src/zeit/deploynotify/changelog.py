@@ -38,6 +38,9 @@ def extract_postdeploy(changelog):
 
 
 def extract_version(changelog, version=None, previous_version=None):
+    if version and previous_version and version == previous_version:
+        return ''
+
     _version = re.compile(r'(.+) \(\d{4}-\d{2}-\d{2}\)\W*$')
     lines = changelog.split('\n')
     start = 0

@@ -112,6 +112,10 @@ def test_extract_to_previous_version():
     )
 
 
+def test_extract_nothing_if_previous_version_is_same():
+    assert changelog.extract_version(VERSIONS, '1.3.0', '1.3.0') == ''
+
+
 def test_extract_issues():
     issues = changelog.extract_issues(
         """\

@@ -1,0 +1,1 @@
+Return empty changelog diff if previous version equals current version
