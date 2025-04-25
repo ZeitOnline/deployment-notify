@@ -78,7 +78,7 @@ class SlackChangelog(Notification):
                 self.previous_version,
                 self.version,
             )
-            return
+            return ''
         changes = re.sub('\n+', '\n', changes)  # Save some vertical space
 
         if not channel_id:
