@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.10.2 (2025-04-25)
+-------------------
+
+Changes
++++++++
+
+- Correctly return empty changelog diff (empty)
+
+
 1.10.1 (2025-04-23)
 -------------------
 
