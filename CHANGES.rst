@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+1.11.0 (2025-05-06)
+-------------------
+
+Changes
++++++++
+
+- MAINT: Consider ES project when updating Jira tickets (jira-project)
+
+
 1.10.2 (2025-04-25)
 -------------------
 
