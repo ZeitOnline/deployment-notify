@@ -59,7 +59,7 @@ def honeycomb(ctx, dataset, text, vcs_url):
 @cli.command()
 @click.pass_context
 @click.option('--url', default='https://zeit-online.atlassian.net')
-@click.option('--issue-prefix', default='ZO|WCM')
+@click.option('--issue-prefix', default='ZO|WCM|ES')
 @click.option('--status-name', default='Testing')
 @click.option('--ignore-status', default='Backlog,Testing,Approved,Closed')
 @click.option('--changelog', default='CHANGES.rst')
