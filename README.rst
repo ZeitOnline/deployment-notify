@@ -19,7 +19,7 @@ The package provides a "multi subcommand" CLI interface::
 
 Typically this will be integrated as a `Keptn Deployment Task <https://lifecycle.keptn.sh/docs/implementing/tasks/>`_, like this::
 
-    apiVersion: external-secrets.io/v1beta1
+    apiVersion: external-secrets.io/v1
     kind: ExternalSecret
     metadata:
       name: deployment-notify
