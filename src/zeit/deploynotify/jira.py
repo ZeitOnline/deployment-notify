@@ -37,4 +37,7 @@ class Jira(Notification):
                 log.info('%s already has status %s', issue, current)
                 continue
             log.info('Setting %s to %s', issue, status_name)
-            api.transition_issue(issue, status_name)
+            try:
+                api.transition_issue(issue, status_name)
+            except jira.JIRAError:
+                log.warn('Could not set %s to %s', issue, status_name, exc_info=True)
