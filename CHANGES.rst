@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+zeit.deploynotify 1.12.0 (2025-09-10)
+-------------------------------------
+
+Changes
++++++++
+
+- jira: Ignore issues that cannot be transitioned (jira)
+
+
 1.11.0 (2025-05-06)
 -------------------
 
