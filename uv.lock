@@ -268,7 +268,7 @@ wheels = [
 
 [[package]]
 name = "zeit-deploynotify"
-version = "1.13.0"
+version = "1.14.0.dev0"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
