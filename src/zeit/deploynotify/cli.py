@@ -4,6 +4,7 @@ import os
 
 import click
 
+from .github import GithubEvent
 from .grafana import Grafana
 from .honeycomb import Honeycomb
 from .jira import Jira
@@ -127,3 +128,13 @@ def slack_postdeploy(ctx, channel_id, changelog):
 def speedcurve(ctx, site_id, text):
     notify = Speedcurve(**ctx.obj)
     notify(site_id, os.environ['SPEEDCURVE_TOKEN'], text)
+
+
+@cli.command()
+@click.pass_context
+@click.option('--repository', required=True)
+@click.option('--event-type', required=True)
+@click.option('--client-payload')
+def gha_workflow(ctx, repository, event_type, client_payload):
+    notify = GithubEvent(**ctx.obj)
+    notify(repository, event_type, os.environ['GITHUB_TOKEN'], client_payload)
