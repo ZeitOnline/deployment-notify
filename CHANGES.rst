@@ -3,6 +3,15 @@ Changelog
 
 .. towncrier release notes start
 
+zeit.deploynotify 1.13.0 (2026-01-08)
+-------------------------------------
+
+Changes
++++++++
+
+- Implement gha-workflow command to send repository_dispatch event to GHA (gha)
+
+
 zeit.deploynotify 1.12.0 (2025-09-10)
 -------------------------------------
 

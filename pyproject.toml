@@ -1,6 +1,6 @@
 [project]
 name = "zeit.deploynotify"
-version = '1.13.0.dev0'
+version = "1.13.0"
 authors = [{ name = "Zeit Online", email = "zon-backend@zeit.de" }]
 dynamic = ["readme"]
 dependencies = [
