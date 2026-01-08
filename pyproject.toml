@@ -1,17 +1,17 @@
 [project]
 name = "zeit.deploynotify"
+version = '1.13.0.dev0'
 authors = [{ name = "Zeit Online", email = "zon-backend@zeit.de" }]
-dynamic = ["version", "readme"]
+dynamic = ["readme"]
 dependencies = [
     "click",
     "jira",
     "requests",
 ]
 
-[project.optional-dependencies]
-test = [
-    "pytest",
-]
+[dependency-groups]
+dev = ["pytest"]
+release = ["towncrier"]
 
 [project.urls]
 Repository = "https://github.com/ZeitOnline/deployment-notify"
@@ -19,18 +19,15 @@ Repository = "https://github.com/ZeitOnline/deployment-notify"
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
-[tool.hatch.version]
-path = "src/zeit/deploynotify/__init__.py"
 
+[tool.hatch.build]
+exclude = ["/bin", "/docs"]
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeit"]
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/x-rst"
 fragments = [{path="README.rst"}, {text="\n\n"}, {path="CHANGES.rst"}]
-
-[tool.hatch.envs.test]
-features = ["test"]
 
 [tool.pytest.ini_options]
 addopts = "--tb=native"

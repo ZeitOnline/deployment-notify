@@ -1,33 +1,10 @@
 #!/bin/bash
 
 set -e
-if [[ -n "$CI" ]]; then set -x; fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT="$(dirname $DIR)"
+cd $DIR/..
 
-if [[ -t 1 ]]; then
-    interactive='-it'
-else
-    interactive=''
-fi
-
-image=$(awk -F= '/org.opencontainers.image.name/ { print $2 }' < Dockerfile)
-
-COMMAND=$1
-case $COMMAND in
-    *)
-        image="${image}:testing"
-        if [[ -n "$CI" ]]; then
-            opts='--cache-from type=gha --cache-to type=gha,mode=max'
-        else
-            opts='--quiet'
-        fi
-        docker buildx build --output type=docker $opts \
-               --target testing --tag $image $ROOT
-        docker run --rm ${interactive} \
-               --volume $ROOT:/app \
-               --entrypoint pytest \
-               $image /app/src "$@"
-    ;;
-esac
+export UV_NO_MANAGED_PYTHON=1
+uv sync --frozen
+exec .venv/bin/pytest "$@"
