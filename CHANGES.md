@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.1](https://github.com/ZeitOnline/deployment-notify/compare/1.13.0...1.13.1) (2026-10-30)
+
+
+### Maintenance
+
+* release with Release Please via the shared pypi-release workflow ([#5](https://github.com/ZeitOnline/deployment-notify/issues/5)) ([44cf5d6](https://github.com/ZeitOnline/deployment-notify/commit/44cf5d6db6083908f9f69adc6f424fdbaad8023c))
+
 ## 1.13.0 (2026-01-08)
 
 - Implement gha-workflow command to send repository_dispatch event to GHA (gha)
